@@ -1,0 +1,1573 @@
+SLIP 1 
+
+Q.1) Python program that demonstrates the hill climbing algorithm to find the maximum of a  mathematical function
+(For example f(x) = -x^2 + 4x)
+
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Define the mathematical function
+def objective_function(x):
+    return -x**2 + 4*x
+
+# Hill climbing algorithm
+def hill_climbing(initial_x, step_size, num_steps):
+    current_x = initial_x
+
+    for _ in range(num_steps):
+        # Evaluate the current and neighboring points
+        current_value = objective_function(current_x)
+        next_value = objective_function(current_x + step_size)
+
+        # If the neighboring point has a higher value, move to that point
+        if next_value > current_value:
+            current_x += step_size
+        else:
+            break  # Stop if no improvement is found
+
+    return current_x
+
+# Set initial parameters
+initial_x = 0.0
+step_size = 0.1
+num_steps = 100
+
+# Run the hill climbing algorithm
+result = hill_climbing(initial_x, step_size, num_steps)
+
+# Print the result
+print("Maximum found at x =", result)
+print("Maximum function value =", objective_function(result))
+
+# Plot the function
+x_values = np.linspace(-2, 6, 100)
+y_values = objective_function(x_values)
+
+plt.plot(x_values, y_values, label='f(x) = -x^2 + 4x')
+plt.scatter(result, objective_function(result), color='red', label='Maximum')
+plt.title('Hill Climbing Algorithm')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.legend()
+plt.show()
+
+
+
+Q.2) Write a Python program to implement Depth First Search algorithm. Refer the following graph
+as an Input for the program. [Initial node=1,Goal node=8]
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, node, neighbor):
+        if node not in self.graph:
+            self.graph[node] = []
+        self.graph[node].append(neighbor)
+
+    def dfs(self, start, goal, path=[]):
+        path = path + [start]
+
+        if start == goal:
+            return path
+
+        if start not in self.graph:
+            return None
+
+        for neighbor in self.graph[start]:
+            if neighbor not in path:
+                new_path = self.dfs(neighbor, goal, path)
+                if new_path:
+                    return new_path
+
+        return None
+
+# Example graph
+graph = Graph()
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(2, 4)
+graph.add_edge(2, 5)
+graph.add_edge(3, 6)
+graph.add_edge(3, 7)
+graph.add_edge(4, 8)
+graph.add_edge(5, 8)
+graph.add_edge(6, 8)
+graph.add_edge(7, 8)
+
+# Set the initial and goal nodes
+initial_node = 1
+goal_node = 8
+
+# Run DFS algorithm
+path = graph.dfs(initial_node, goal_node)
+
+# Print the result
+if path:
+    print(f"Path from {initial_node} to {goal_node}:", path)
+else:
+print(f"No path found from {initial_node} to {goal_node}")
+ 
+
+-------------------------- Slip 1 --------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SLIP 2 
+
+
+
+
+Q.1) Write a python program to generate Calendar for the given month and year?.
+import calendar
+
+def generate_calendar(year, month):
+    cal = calendar.monthcalendar(year, month)
+    month_name = calendar.month_name[month]
+
+    print(f"Calendar for {month_name} {year}:")
+    print("Mo Tu We Th Fr Sa Su")
+
+    for week in cal:
+        for day in week:
+            if day == 0:
+                print("   ", end=" ")
+            else:
+                print(f"{day:2d} ", end=" ")
+        print()
+
+# Input: Year and Month
+year = int(input("Enter the year: "))
+month = int(input("Enter the month (1-12): "))
+
+generate_calendar(year, month)
+
+Q.2)Write a Python program to implement Depth First Search algorithm. Refer the following graph
+as an Input for the program.[Initial node=1,Goal node=7].
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, node, neighbor):
+        if node not in self.graph:
+            self.graph[node] = []
+        self.graph[node].append(neighbor)
+
+    def dfs(self, start, goal, path=[]):
+        path = path + [start]
+
+        if start == goal:
+            return path
+
+        if start not in self.graph:
+            return None
+
+        for neighbor in self.graph[start]:
+            if neighbor not in path:
+                new_path = self.dfs(neighbor, goal, path)
+                if new_path:
+                    return new_path
+
+        return None
+
+# Example graph
+graph = Graph()
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(2, 4)
+graph.add_edge(2, 5)
+graph.add_edge(3, 6)
+graph.add_edge(3, 7)
+
+# Set the initial and goal nodes
+initial_node = 1
+goal_node = 7
+
+# Run DFS algorithm
+path = graph.dfs(initial_node, goal_node)
+
+# Print the result
+if path:
+    print(f"Path from {initial_node} to {goal_node}:", path)
+else:
+print(f"No path found from {initial_node} to {goal_node}")
+
+-------------------------- Slip 2 -------------------
+
+
+SLIP 3
+
+
+Q.1) Write a python program to remove punctuations from the given string?
+
+
+import string
+
+def remove_punctuation(input_string):
+    # Get the list of punctuation characters
+    punctuation_chars = string.punctuation
+
+    # Create a translation table
+    translation_table = str.maketrans("", "", punctuation_chars)
+
+    # Remove punctuations using the translation table
+    result_string = input_string.translate(translation_table)
+
+    return result_string
+
+# Example usage
+input_string = "Hello, World! This is an example string."
+result = remove_punctuation(input_string)
+
+print("Original string:", input_string)
+print("String without punctuations:", result)
+
+
+
+Q.2) Write a Python program to implement Depth First Search algorithm. Refer the following graph  as an Input for the program.[Initial node=2,Goal node=7]
+
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, node, neighbor):
+        if node not in self.graph:
+            self.graph[node] = []
+        self.graph[node].append(neighbor)
+
+    def dfs(self, start, goal, path=[]):
+        path = path + [start]
+
+        if start == goal:
+            return path
+
+        if start not in self.graph:
+            return None
+
+        for neighbor in self.graph[start]:
+            if neighbor not in path:
+                new_path = self.dfs(neighbor, goal, path)
+                if new_path:
+                    return new_path
+
+        return None
+
+# Example graph
+graph = Graph()
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(2, 4)
+graph.add_edge(2, 5)
+graph.add_edge(3, 6)
+graph.add_edge(3, 7)
+
+# Set the initial and goal nodes
+initial_node = 2
+goal_node = 7
+
+# Run DFS algorithm
+path = graph.dfs(initial_node, goal_node)
+
+# Print the result
+if path:
+    print(f"Path from {initial_node} to {goal_node}:", path)
+else:
+    print(f"No path found from {initial_node} to {goal_node}")
+
+-----------slip 3--------------
+
+
+
+SLIP 5
+
+Q.1) Write a python program to implement Lemmatization using NLTK.
+
+pip install nltk
+import nltk
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
+
+nltk.download('punkt')
+nltk.download('wordnet')
+
+def lemmatize_text(text):
+    lemmatizer = WordNetLemmatizer()
+    tokens = word_tokenize(text)
+    lemmatized_tokens = [lemmatizer.lemmatize(word) for word in tokens]
+    lemmatized_text = ' '.join(lemmatized_tokens)
+    return lemmatized_text
+
+# Example usage
+input_text = "The cats are running and the dogs are barking loudly."
+lemmatized_text = lemmatize_text(input_text)
+
+print("Original text:", input_text)
+print("Lemmatized text:", lemmatized_text)
+
+
+Q.2) Write a Python program to implement Breadth First Search algorithm. Refer the following graph as an Input for the program.[Initial node=1,Goal node=8].
+
+from collections import deque
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, node, neighbor):
+        if node not in self.graph:
+            self.graph[node] = []
+        self.graph[node].append(neighbor)
+
+    def bfs(self, start, goal):
+        visited = set()
+        queue = deque([start])
+
+        while queue:
+            current_node = queue.popleft()
+
+            if current_node == goal:
+                return True
+
+            if current_node not in visited:
+                visited.add(current_node)
+                queue.extend(neighbor for neighbor in self.graph.get(current_node, []) if neighbor not in visited)
+
+        return False
+
+# Example graph
+graph = Graph()
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(2, 4)
+graph.add_edge(2, 5)
+graph.add_edge(3, 6)
+graph.add_edge(3, 7)
+graph.add_edge(4, 8)
+graph.add_edge(5, 8)
+graph.add_edge(6, 8)
+graph.add_edge(7, 8)
+
+# Set the initial and goal nodes
+initial_node = 1
+goal_node = 8
+
+# Run BFS algorithm
+result = graph.bfs(initial_node, goal_node)
+
+# Print the result
+if result:
+    print(f"There is a path from {initial_node} to {goal_node}.")
+else:
+print(f"No path found from {initial_node} to {goal_node}.")
+
+
+
+------------------------- Slip 5 --------------------
+
+
+SLIP 6
+
+
+Q1. Write a python program to remove stop words for a given passage from a text file using
+NLTK?
+
+pip install nltk
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+# Download NLTK stop words dataset
+nltk.download('stopwords')
+nltk.download('punkt')
+
+def remove_stop_words(input_text):
+    stop_words = set(stopwords.words('english'))
+    words = word_tokenize(input_text)
+    filtered_words = [word for word in words if word.lower() not in stop_words]
+    filtered_text = ' '.join(filtered_words)
+    return filtered_text
+
+# Read passage from a text file
+file_path = 'path/to/your/text/file.txt'
+with open(file_path, 'r') as file:
+    passage = file.read()
+
+# Remove stop words
+filtered_passage = remove_stop_words(passage)
+
+# Print the result
+print("Original Passage:\n", passage)
+print("\nPassage after removing stop words:\n", filtered_passage)
+
+
+Q.2) Write a Python program to implement Breadth First Search algorithm. Refer the following graph as an Input for the program.[Initial node=1,Goal node=8].
+
+from collections import deque
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, node, neighbor):
+        if node not in self.graph:
+            self.graph[node] = []
+        self.graph[node].append(neighbor)
+
+    def bfs(self, start, goal):
+        visited = set()
+        queue = deque([start])
+
+        while queue:
+            current_node = queue.popleft()
+
+            if current_node == goal:
+                return True
+
+            if current_node not in visited:
+                visited.add(current_node)
+                queue.extend(neighbor for neighbor in self.graph.get(current_node, []) if neighbor not in visited)
+
+        return False
+
+# Example graph
+graph = Graph()
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(2, 4)
+graph.add_edge(2, 5)
+graph.add_edge(3, 6)
+graph.add_edge(3, 7)
+graph.add_edge(4, 8)
+graph.add_edge(5, 8)
+graph.add_edge(6, 8)
+graph.add_edge(7, 8)
+
+# Set the initial and goal nodes
+initial_node = 1
+goal_node = 8
+
+# Run BFS algorithm
+result = graph.bfs(initial_node, goal_node)
+
+# Print the result
+if result:
+    print(f"There is a path from {initial_node} to {goal_node}.")
+else:
+print(f"No path found from {initial_node} to {goal_node}.")
+
+-------------------------- Slip 6 --------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SLIP 7
+
+Q.1) Write a python program implement tic-tac-toe using alpha beeta pruning.
+
+import math
+
+class TicTacToe:
+    def __init__(self):
+        self.board = [[' ' for _ in range(3)] for _ in range(3)]
+        self.current_player = 'X'
+
+    def print_board(self):
+        for row in self.board:
+            print('|'.join(row))
+            print("-----")
+
+    def is_winner(self, player):
+        # Check rows and columns
+        for i in range(3):
+            if all(self.board[i][j] == player for j in range(3)) or all(self.board[j][i] == player for j in range(3)):
+                return True
+
+        # Check diagonals
+        if all(self.board[i][i] == player for i in range(3)) or all(self.board[i][2 - i] == player for i in range(3)):
+            return True
+
+        return False
+
+    def is_full(self):
+        return all(cell != ' ' for row in self.board for cell in row)
+
+    def is_game_over(self):
+        return self.is_winner('X') or self.is_winner('O') or self.is_full()
+
+    def get_available_moves(self):
+        return [(i, j) for i in range(3) for j in range(3) if self.board[i][j] == ' ']
+
+    def make_move(self, move):
+        i, j = move
+        self.board[i][j] = self.current_player
+        self.switch_player()
+
+    def switch_player(self):
+        self.current_player = 'O' if self.current_player == 'X' else 'X'
+
+    def minimax(self, depth, alpha, beta, maximizing_player):
+        if self.is_winner('X'):
+            return -1
+        elif self.is_winner('O'):
+            return 1
+        elif self.is_full():
+            return 0
+
+        available_moves = self.get_available_moves()
+
+        if maximizing_player:
+            max_eval = -math.inf
+            for move in available_moves:
+                self.make_move(move)
+                eval = self.minimax(depth + 1, alpha, beta, False)
+                self.board[move[0]][move[1]] = ' '  # Undo the move
+                max_eval = max(max_eval, eval)
+                alpha = max(alpha, eval)
+                if beta <= alpha:
+                    break  # Beta cut-off
+            return max_eval
+        else:
+            min_eval = math.inf
+            for move in available_moves:
+                self.make_move(move)
+                eval = self.minimax(depth + 1, alpha, beta, True)
+                self.board[move[0]][move[1]] = ' '  # Undo the move
+                min_eval = min(min_eval, eval)
+                beta = min(beta, eval)
+                if beta <= alpha:
+                    break  # Alpha cut-off
+            return min_eval
+
+    def find_best_move(self):
+        best_val = -math.inf
+        best_move = None
+        for move in self.get_available_moves():
+            self.make_move(move)
+            move_val = self.minimax(0, -math.inf, math.inf, False)
+            self.board[move[0]][move[1]] = ' '  # Undo the move
+            if move_val > best_val:
+                best_val = move_val
+                best_move = move
+        return best_move
+
+
+def main():
+    game = TicTacToe()
+
+    while not game.is_game_over():
+        game.print_board()
+
+        if game.current_player == 'X':
+            row = int(input("Enter row (0, 1, or 2): "))
+            col = int(input("Enter column (0, 1, or 2): "))
+            move = (row, col)
+        else:
+            move = game.find_best_move()
+
+        game.make_move(move)
+
+    game.print_board()
+
+    if game.is_winner('X'):
+        print("Player X wins!")
+    elif game.is_winner('O'):
+        print("Player O wins!")
+    else:
+        print("It's a tie!")
+
+
+if __name__ == "__main__":
+main()
+
+
+Q.2) Write a Python program to implement Simple Chatbot.
+import random
+
+def get_response(user_input):
+    user_input = user_input.lower()
+
+    greetings = ["hello", "hi", "hey", "howdy", "hola"]
+    farewells = ["bye", "goodbye", "see you", "farewell"]
+
+    if any(greeting in user_input for greeting in greetings):
+        return "Hello! How can I help you today?"
+
+    elif any(farewell in user_input for farewell in farewells):
+        return "Goodbye! Have a great day."
+
+    elif "how are you" in user_input:
+        return "I'm just a computer program, but thanks for asking!"
+
+    else:
+        return "I'm sorry, I didn't understand that. Can you please rephrase?"
+
+def simple_chatbot():
+    print("Simple Chatbot: Hello! Type 'bye' to exit.")
+    
+    while True:
+        user_input = input("You: ")
+        
+        if user_input.lower() == 'bye':
+            print("Simple Chatbot: Goodbye!")
+            break
+
+        response = get_response(user_input)
+        print("Simple Chatbot:", response)
+
+if __name__ == "__main__":
+    simple_chatbot()
+
+
+
+
+
+
+-------------------------- Slip 7 --------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+SLIP 8
+
+Q.1) Write a Python program to accept a string. Find and print the number of upper case alphabets
+and lower case alphabets.
+
+def count_upper_lower(string):
+    upper_count = 0
+    lower_count = 0
+
+    for char in string:
+        if char.isupper():
+            upper_count += 1
+        elif char.islower():
+            lower_count += 1
+
+    return upper_count, lower_count
+
+if __name__ == "__main__":
+    user_input = input("Enter a string: ")
+    
+    upper, lower = count_upper_lower(user_input)
+
+    print("Number of uppercase letters:", upper)
+print("Number of lowercase letters:", lower)
+
+
+Q.2) Write a Python program to solve tic-tac-toe problem.
+
+
+def check_winner(board):
+    # Check rows and columns
+    for i in range(3):
+        if all(board[i][j] == 'X' for j in range(3)) or all(board[j][i] == 'X' for j in range(3)):
+            return 'X'
+        elif all(board[i][j] == 'O' for j in range(3)) or all(board[j][i] == 'O' for j in range(3)):
+            return 'O'
+
+    # Check diagonals
+    if all(board[i][i] == 'X' for i in range(3)) or all(board[i][2 - i] == 'X' for i in range(3)):
+        return 'X'
+    elif all(board[i][i] == 'O' for i in range(3)) or all(board[i][2 - i] == 'O' for i in range(3)):
+        return 'O'
+
+    return None
+
+def print_board(board):
+    for row in board:
+        print('|'.join(row))
+        print("-----")
+
+def tic_tac_toe():
+    board = [[' ' for _ in range(3)] for _ in range(3)]
+    current_player = 'X'
+
+    for _ in range(9):
+        print_board(board)
+
+        row = int(input(f"Player {current_player}, enter row (0, 1, or 2): "))
+        col = int(input(f"Player {current_player}, enter column (0, 1, or 2): "))
+
+        if board[row][col] == ' ':
+            board[row][col] = current_player
+        else:
+            print("Invalid move. Try again.")
+            continue
+
+        winner = check_winner(board)
+
+        if winner:
+            print_board(board)
+            print(f"Player {winner} wins!")
+            break
+
+        current_player = 'O' if current_player == 'X' else 'X'
+    else:
+        print_board(board)
+        print("It's a tie!")
+
+if __name__ == "__main__":
+    tic_tac_toe()
+
+
+-------------------------- Slip 8------------------
+
+
+
+SLIP 10
+
+
+
+Q.1) Write Python program to implement crypt arithmetic problem
+TWO+TWO=FOUR
+from itertools import permutations
+
+def solve_cryptarithmetic():
+    for perm in permutations('0123456789', 5):
+        assignment = dict(zip('TWOFR', perm))
+        if assignment['T'] == '0' or assignment['F'] == '0':
+            continue
+
+        two = int(assignment['T'] + assignment['W'] + assignment['O'])
+        four = int(assignment['F'] + assignment['O'] + assignment['U'] + assignment['R'])
+
+        if two + two == four:
+            print("Solution found:")
+            print(f"  {assignment['T']} {assignment['W']} {assignment['O']}")
+            print(f"+ {assignment['T']} {assignment['W']} {assignment['O']}")
+            print("--------")
+            print(f" {assignment['F']} {assignment['O']} {assignment['U']} {assignment['R']}")
+            return
+
+    print("No solution found.")
+
+if __name__ == "__main__":
+    solve_cryptarithmetic()
+
+
+Q.2) Write a Python program to implement Simple Chatbot.
+import random
+
+def simple_chatbot():
+    print("Simple Chatbot: Hello! How can I help you today?")
+
+    while True:
+        user_input = input("You: ")
+
+        if "hello" in user_input.lower():
+            response = "Hello! How can I assist you?"
+        elif "how are you" in user_input.lower():
+            response = "I'm just a computer program, but I'm doing well. Thank you for asking!"
+        elif "bye" in user_input.lower():
+            response = "Goodbye! Have a great day!"
+            break
+        else:
+            response = "I'm sorry, I didn't understand that. Can you please rephrase?"
+
+        print("Simple Chatbot:", response)
+
+if __name__ == "__main__":
+    simple_chatbot()
+
+-------------------------- Slip 10 --------------------
+
+
+
+SLIP 12
+
+
+Q.1) Write a python program to generate Calendar for the given month and year?
+import calendar
+
+def generate_calendar(year, month):
+    cal = calendar.monthcalendar(year, month)
+
+    print(f"Calendar for {calendar.month_name[month]} {year}:")
+
+    # Print the days of the week
+    print("Mo Tu We Th Fr Sa Su")
+
+    for week in cal:
+        week_str = ' '.join(str(day) if day != 0 else '  ' for day in week)
+        print(week_str)
+
+if __name__ == "__main__":
+    try:
+        year = int(input("Enter the year: "))
+        month = int(input("Enter the month (1-12): "))
+
+        if 1 <= month <= 12:
+            generate_calendar(year, month)
+        else:
+            print("Invalid month. Please enter a month between 1 and 12.")
+    except ValueError:
+        print("Invalid input. Please enter valid numeric values for year and month.")
+
+
+Q.2)Write a Python program to simulate 4-Queens problem.
+def is_safe(board, row, col):
+    # Check if there is a queen in the same column
+    for i in range(row):
+        if board[i] == col or \
+           board[i] - i == col - row or \
+           board[i] + i == col + row:
+            return False
+    return True
+
+def print_solution(board):
+    for row in board:
+        print(" ".join("Q" if col == row else "." for col in range(4)))
+    print()
+
+def solve_n_queens(board, row):
+    if row == 4:
+        print_solution(board)
+        return
+
+    for col in range(4):
+        if is_safe(board, row, col):
+            board[row] = col
+            solve_n_queens(board, row + 1)
+            board[row] = -1  # Backtrack
+
+if __name__ == "__main__":
+    # Initialize the chessboard with -1 (no queen placed yet)
+    chessboard = [-1] * 4
+
+    print("Solutions to the 4-Queens problem:")
+solve_n_queens(chessboard, 0)
+
+-------------------------- Slip 12 --------------------
+
+
+
+
+Slip 16:- 
+Q.1) Write a Program to Implement Tower of Hanoi using Python 
+
+def tower_of_hanoi(n, source, target, auxiliary):
+    if n == 1:
+        print(f"Move disk 1 from {source} to {target}")
+        return
+    tower_of_hanoi(n - 1, source, auxiliary, target)
+    print(f"Move disk {n} from {source} to {target}")
+    tower_of_hanoi(n - 1, auxiliary, target, source)
+
+if __name__ == "__main__":
+    try:
+        num_disks = int(input("Enter the number of disks: "))
+        if num_disks <= 0:
+            print("Please enter a positive integer.")
+        else:
+            source_rod = "A"
+            target_rod = "C"
+            auxiliary_rod = "B"
+
+            print(f"Solving Tower of Hanoi with {num_disks} disks:")
+            tower_of_hanoi(num_disks, source_rod, target_rod, auxiliary_rod)
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
+
+
+Q.2) Write a Python program to solve tic-tac-toe problem.
+def print_board(board):
+    for row in board:
+        print(" | ".join(row))
+        print("-" * 9)
+
+def check_winner(board, player):
+    # Check rows and columns
+    for i in range(3):
+        if all(cell == player for cell in board[i]) or all(board[j][i] == player for j in range(3)):
+            return True
+
+    # Check diagonals
+    if all(board[i][i] == player for i in range(3)) or all(board[i][2 - i] == player for i in range(3)):
+        return True
+
+    return False
+
+def is_board_full(board):
+    return all(all(cell != " " for cell in row) for row in board)
+
+def tic_tac_toe():
+    board = [[" " for _ in range(3)] for _ in range(3)]
+    current_player = "X"
+
+    while True:
+        print_board(board)
+        row = int(input(f"Player {current_player}, enter row (0, 1, or 2): "))
+        col = int(input(f"Player {current_player}, enter column (0, 1, or 2): "))
+
+        if 0 <= row < 3 and 0 <= col < 3 and board[row][col] == " ":
+            board[row][col] = current_player
+
+            if check_winner(board, current_player):
+                print_board(board)
+                print(f"Player {current_player} wins!")
+                break
+
+            if is_board_full(board):
+                print_board(board)
+                print("It's a tie!")
+                break
+
+            current_player = "O" if current_player == "X" else "X"
+        else:
+            print("Invalid move. Try again.")
+
+if __name__ == "__main__":
+    tic_tac_toe()
+
+-------------------------- Slip 16 --------------------
+
+
+Slip 17:- 
+
+Q.1) Python program that demonstrates the hill climbing algorithm to find the maximum of a
+mathematical function.
+
+import math
+
+def objective_function(x):
+    # Define the mathematical function to maximize (example: f(x) = -x^2 + 4x)
+    return -x**2 + 4*x
+
+def hill_climbing(max_iterations=1000, step_size=0.1):
+    x = 0.0  # Initial starting point
+    for _ in range(max_iterations):
+        current_value = objective_function(x)
+        next_value = objective_function(x + step_size)
+
+        if next_value > current_value:
+            x += step_size
+        else:
+            break
+
+    return x, objective_function(x)
+
+if __name__ == "__main__":
+    result_x, result_value = hill_climbing()
+
+    print(f"Optimal value of x: {result_x}")
+    print(f"Maximum value of the objective function: {result_value}")
+
+Q.2) Write a Python program to implement A* algorithm. Refer the following graph as an Input for
+the program.[ Start vertex is A and Goal Vertex is G]
+
+import heapq
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, node, neighbors):
+        self.graph[node] = neighbors
+
+def astar(graph, start, goal, heuristic):
+    open_set = [(0, start)]  # Priority queue with initial cost and start node
+    came_from = {}
+    cost_so_far = {start: 0}
+
+    while open_set:
+        current_cost, current_node = heapq.heappop(open_set)
+
+        if current_node == goal:
+            path = reconstruct_path(came_from, start, goal)
+            return path
+
+        for neighbor, cost in graph.graph[current_node].items():
+            new_cost = cost_so_far[current_node] + cost
+            if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                cost_so_far[neighbor] = new_cost
+                priority = new_cost + heuristic(neighbor, goal)
+                heapq.heappush(open_set, (priority, neighbor))
+                came_from[neighbor] = current_node
+
+    return None
+
+def reconstruct_path(came_from, start, goal):
+    current = goal
+    path = [current]
+    while current != start:
+        current = came_from[current]
+        path.insert(0, current)
+    return path
+
+def heuristic(node, goal):
+    # Implement your heuristic function (e.g., Euclidean distance, Manhattan distance)
+    # Replace this with your specific heuristic for the given problem
+    return 0
+
+if __name__ == "__main__":
+    # Example graph represented as an adjacency list
+    example_graph = Graph()
+    example_graph.add_edge('A', {'B': 1, 'C': 4})
+    example_graph.add_edge('B', {'A': 1, 'C': 2, 'D': 5})
+    example_graph.add_edge('C', {'A': 4, 'B': 2, 'D': 1, 'E': 7})
+    example_graph.add_edge('D', {'B': 5, 'C': 1, 'E': 3, 'F': 8})
+    example_graph.add_edge('E', {'C': 7, 'D': 3, 'F': 6, 'G': 2})
+    example_graph.add_edge('F', {'D': 8, 'E': 6, 'G': 9})
+    example_graph.add_edge('G', {'E': 2, 'F': 9})
+
+    start_vertex = 'A'
+    goal_vertex = 'G'
+
+    path = astar(example_graph, start_vertex, goal_vertex, heuristic)
+
+    if path:
+        print(f"Shortest path from {start_vertex} to {goal_vertex}: {path}")
+    else:
+        print(f"No path found from {start_vertex} to {goal_vertex}.")
+
+
+-------------------------- Slip 17 --------------------
+
+
+Slip 21
+
+Q.1)Write a python program to remove punctuations from the given string?
+
+# define punctuation
+punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+
+my_str = "Hello!!!, he said ---and went."
+
+# To take input from the user
+# my_str = input("Enter a string: ")
+
+# remove punctuation from the string
+no_punct = ""
+for char in my_str:
+   if char not in punctuations:
+       no_punct = no_punct + char
+
+# display the unpunctuated string
+print(no_punct)
+
+Q.2)Write a Python program for the following Cryptarithmetic problems.
+GO + TO = OUT
+
+# Python3 program for the above approach
+
+# Function to check if the
+# assignment of digits to
+# characters is possible
+def isSolvable(words, result):
+	# Stores the value
+	# assigned to alphabets
+	mp = [-1]*(26)
+	
+	# Stores if a number
+	# is assigned to any
+	# character or not
+	used = [0]*(10)
+
+	# Stores the sum of position
+	# value of a character
+	# in every string
+	Hash = [0]*(26)
+
+	# Stores if a character
+	# is at index 0 of any
+	# string
+	CharAtfront = [0]*(26)
+
+	# Stores the string formed
+	# by concatenating every
+	# occurred character only
+	# once
+	uniq = ""
+
+	# Iterator over the array,
+	# words
+	for word in range(len(words)):
+		# Iterate over the string,
+		# word
+		for i in range(len(words[word])):
+			# Stores the character
+			# at ith position
+			ch = words[word][i]
+
+			# Update Hash[ch-'A]
+			Hash[ord(ch) - ord('A')] += pow(10, len(words[word]) - i - 1)
+
+			# If mp[ch-'A'] is -1
+			if mp[ord(ch) - ord('A')] == -1:
+				mp[ord(ch) - ord('A')] = 0
+				uniq += str(ch)
+
+			# If i is 0 and word
+			# length is greater
+			# than 1
+			if i == 0 and len(words[word]) > 1:
+				CharAtfront[ord(ch) - ord('A')] = 1
+
+	# Iterate over the string result
+	for i in range(len(result)):
+		ch = result[i]
+
+		Hash[ord(ch) - ord('A')] -= pow(10, len(result) - i - 1)
+
+		# If mp[ch-'A] is -1
+		if mp[ord(ch) - ord('A')] == -1:
+			mp[ord(ch) - ord('A')] = 0
+			uniq += str(ch)
+
+		# If i is 0 and length of
+		# result is greater than 1
+		if i == 0 and len(result) > 1:
+			CharAtfront[ord(ch) - ord('A')] = 1
+
+	mp = [-1]*(26)
+
+	# Recursive call of the function
+	return True
+
+# Auxiliary Recursive function
+# to perform backtracking
+def solve(words, i, S, mp, used, Hash, CharAtfront):
+	# If i is word.length
+	if i == len(words):
+		# Return true if S is 0
+		return S == 0
+
+	# Stores the character at
+	# index i
+	ch = words[i]
+
+	# Stores the mapped value
+	# of ch
+	val = mp[ord(words[i]) - ord('A')]
+
+	# If val is not -1
+	if val != -1:
+		# Recursion
+		return solve(words, i + 1, S + val * Hash[ord(ch) - ord('A')], mp, used, Hash, CharAtfront)
+
+	# Stores if there is any
+	# possible solution
+	x = False
+
+	# Iterate over the range
+	for l in range(10):
+		# If CharAtfront[ch-'A']
+		# is true and l is 0
+		if CharAtfront[ord(ch) - ord('A')] == 1 and l == 0:
+			continue
+
+		# If used[l] is true
+		if used[l] == 1:
+			continue
+
+		# Assign l to ch
+		mp[ord(ch) - ord('A')] = l
+
+		# Marked l as used
+		used[l] = 1
+
+		# Recursive function call
+		x |= solve(words, i + 1, S + l * Hash[ord(ch) - ord('A')], mp, used, Hash, CharAtfront)
+
+		# Backtrack
+		mp[ord(ch) - ord('A')] = -1
+
+		# Unset used[l]
+		used[l] = 0
+
+	# Return the value of x;
+	return x
+
+arr = [ "SIX", "SEVEN", "SEVEN" ]
+S = "TWENTY"
+
+# Function Call
+if isSolvable(arr, S):
+	print("Yes")
+else:
+	print("No")
+	
+	
+
+---------------------Slip 21---------------------------------------
+
+
+Slip 22
+
+
+Q.1) Write a Program to Implement Alpha-Beta Pruning using Python
+class Node:
+    def __init__(self, value, children=[]):
+        self.value = value
+        self.children = children
+
+def alpha_beta_pruning(node, alpha, beta, maximizing_player):
+    if not node.children:
+        return node.value
+
+    if maximizing_player:
+        max_eval = float('-inf')
+        for child in node.children:
+            eval = alpha_beta_pruning(child, alpha, beta, False)
+            max_eval = max(max_eval, eval)
+            alpha = max(alpha, eval)
+            if beta <= alpha:
+                break
+        return max_eval
+    else:
+        min_eval = float('inf')
+        for child in node.children:
+            eval = alpha_beta_pruning(child, alpha, beta, True)
+            min_eval = min(min_eval, eval)
+            beta = min(beta, eval)
+            if beta <= alpha:
+                break
+        return min_eval
+
+# Example usage
+if __name__ == "__main__":
+    # Define a simple game tree (tic-tac-toe)
+    game_tree = Node(0, [
+        Node(3, [Node(5), Node(2), Node(9)]),
+        Node(8, [Node(7), Node(1), Node(4)]),
+        Node(1, [Node(6), Node(2), Node(0)])
+    ])
+
+    # Call alpha-beta pruning on the root node
+    result = alpha_beta_pruning(game_tree, float('-inf'), float('inf'), True)
+    print("Optimal value:", result)
+
+Q.2) Write a Python program to implement Simple Chatbot
+import random
+
+def simple_chatbot(user_input):
+    greetings = ["hello", "hi", "hey", "greetings", "howdy"]
+    farewells = ["bye", "goodbye", "see you", "farewell", "see you later"]
+    questions = ["how are you?", "what's up?", "how's it going?", "how do you do?"]
+    responses = {
+        "greeting": ["Hello!", "Hi!", "Hey there!"],
+        "farewell": ["Goodbye!", "See you later!", "Take care!"],
+        "question": ["I'm doing well, thank you!", "Not much, just chatting. How about you?", "I'm just a computer program, but thanks for asking!"]
+    }
+
+    user_input_lower = user_input.lower()
+
+    for greeting in greetings:
+        if greeting in user_input_lower:
+            return random.choice(responses["greeting"])
+
+    for farewell in farewells:
+        if farewell in user_input_lower:
+            return random.choice(responses["farewell"])
+
+    for question in questions:
+        if question in user_input_lower:
+            return random.choice(responses["question"])
+
+    return "I'm sorry, I didn't understand that. Can you please rephrase or ask something else?"
+
+if __name__ == "__main__":
+    print("Simple Chatbot: Hello! Type 'bye' to exit.")
+    
+    while True:
+        user_input = input("You: ")
+        
+        if user_input.lower() == "bye":
+            print("Simple Chatbot: Goodbye! Have a great day!")
+            break
+
+        response = simple_chatbot(user_input)
+        print("Simple Chatbot:", response)
+
+---------------------Slip 22---------------------------------------
+
+Slip 23
+Q.1) Write a Program to Implement Tower of Hanoi using Python.
+
+def tower_of_hanoi(n, source, target, auxiliary):
+    if n == 1:
+        print(f"Move disk 1 from {source} to {target}")
+        return
+    tower_of_hanoi(n - 1, source, auxiliary, target)
+    print(f"Move disk {n} from {source} to {target}")
+    tower_of_hanoi(n - 1, auxiliary, target, source)
+
+if __name__ == "__main__":
+    num_disks = int(input("Enter the number of disks: "))
+    tower_of_hanoi(num_disks, 'A', 'C', 'B')
+
+Q.2) Write a Python program for the following Cryptarithmetic problems
+
+SEND + MORE = MONEY
+from itertools import permutations
+
+def is_valid_solution(mapping, equation):
+    send, more, money = equation
+    send_val = evaluate_expression(send, mapping)
+    more_val = evaluate_expression(more, mapping)
+    money_val = evaluate_expression(money, mapping)
+    return send_val + more_val == money_val
+
+def evaluate_expression(expression, mapping):
+    return int(''.join(str(mapping[char]) for char in expression))
+
+def solve_cryptarithmetic_puzzle():
+    unique_chars = set("SENDMOREMONEY")
+    digits = '0123456789'
+    for perm in permutations(digits, len(unique_chars)):
+        mapping = dict(zip(unique_chars, perm))
+        if is_valid_solution(mapping, ("SEND", "MORE", "MONEY")):
+            print("Solution found:")
+            print("   SEND:", evaluate_expression("SEND", mapping))
+            print("   MORE:", evaluate_expression("MORE", mapping))
+            print(" + MONEY:", evaluate_expression("MONEY", mapping))
+            return
+    print("No solution found.")
+
+if __name__ == "__main__":
+solve_cryptarithmetic_puzzle()
+
+
+-----------slip 23-----------
+
+
+
+
+
+
+
+Slip 24
+
+Q.1)Write a python program to sort the sentence in alphabetical order?
+
+def sort_sentence(sentence):
+    words = sentence.split()
+    sorted_words = sorted(words)
+    sorted_sentence = ' '.join(sorted_words)
+    return sorted_sentence
+
+# Example usage:
+input_sentence = "This is a sample sentence to sort alphabetically."
+result = sort_sentence(input_sentence)
+print("Original Sentence:", input_sentence)
+print("Sorted Sentence:", result)
+
+
+Q.2) Write a Python program for the following Cryptorithmetic problems
+
+CROSS+ROADS = DANGER
+
+
+
+from itertools import permutations
+
+def is_valid_solution(mapping, equation):
+    cross, roads, danger = equation
+    cross_val = evaluate_expression(cross, mapping)
+    roads_val = evaluate_expression(roads, mapping)
+    danger_val = evaluate_expression(danger, mapping)
+    return cross_val + roads_val == danger_val
+
+def evaluate_expression(expression, mapping):
+    return int(''.join(str(mapping[char]) for char in expression))
+
+def solve_cryptarithmetic_puzzle():
+    unique_chars = set("CROSSROADSDANGER")
+    digits = '0123456789'
+    for perm in permutations(digits, len(unique_chars)):
+        mapping = dict(zip(unique_chars, perm))
+        if is_valid_solution(mapping, ("CROSS", "ROADS", "DANGER")):
+            print("Solution found:")
+            print("   CROSS:", evaluate_expression("CROSS", mapping))
+            print("   ROADS:", evaluate_expression("ROADS", mapping))
+            print(" + DANGER:", evaluate_expression("DANGER", mapping))
+            print("-------------------")
+            print(" = ", evaluate_expression("CROSS", mapping) + evaluate_expression("ROADS", mapping))
+            return
+    print("No solution found.")
+
+if __name__ == "__main__":
+    solve_cryptarithmetic_puzzle()
+
+----------------------Slip 24 ------------------------
+
+
+
+
+
+Slip 25:- 
+
+Q.1). Build a bot which provides all the information related to you in college.
+pip install Flask
+
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/college_bot', methods=['POST'])
+def college_bot():
+    data = request.get_json()
+
+    # Extract intent and parameters from the incoming JSON data
+    intent = data.get('intent', '').lower()
+    parameters = data.get('parameters', {})
+
+    # Handle different intents
+    if intent == 'get_info':
+        response = get_info(parameters)
+    elif intent == 'courses':
+        response = get_courses(parameters)
+    else:
+        response = {'error': 'Invalid intent'}
+
+    return jsonify(response)
+
+def get_info(parameters):
+    # Replace the following line with the logic to retrieve information from your college database or other sources
+    # For demonstration purposes, a static response is provided
+    return {'response': 'I am a college bot. What information would you like to know?'}
+
+def get_courses(parameters):
+    # Replace the following line with the logic to retrieve course information from your college database or other sources
+    # For demonstration purposes, a static response is provided
+    return {'response': 'Here are the available courses: Computer Science, Biology, Physics, Mathematics, etc.'}
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+python college_bot.py
+
+
+
+Q.2) Write a Python program to solve 8-puzzle problem.
+
+import heapq
+
+class PuzzleNode:
+    def __init__(self, state, parent=None, action=None, cost=0, heuristic=0):
+        self.state = state
+        self.parent = parent
+        self.action = action
+        self.cost = cost
+        self.heuristic = heuristic
+
+    def __lt__(self, other):
+        return (self.cost + self.heuristic) < (other.cost + other.heuristic)
+
+    def __eq__(self, other):
+        return self.state == other.state
+
+def manhattan_distance(state, goal):
+    distance = 0
+    for i in range(3):
+        for j in range(3):
+            value = state[i][j]
+            if value != 0:
+                goal_position = divmod(goal.index(value), 3)
+                distance += abs(i - goal_position[0]) + abs(j - goal_position[1])
+    return distance
+
+def get_neighbors(node):
+    neighbors = []
+    i, j = next((i, j) for i, row in enumerate(node.state) for j, value in enumerate(row) if value == 0)
+    actions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # Possible moves: right, down, left, up
+
+    for action in actions:
+        new_i, new_j = i + action[0], j + action[1]
+
+        if 0 <= new_i < 3 and 0 <= new_j < 3:
+            new_state = [row[:] for row in node.state]
+            new_state[i][j], new_state[new_i][new_j] = new_state[new_i][new_j], new_state[i][j]
+            neighbors.append(PuzzleNode(new_state, node, action, node.cost + 1, manhattan_distance(new_state, goal_state)))
+
+    return neighbors
+
+def print_solution(solution_node):
+    actions = []
+    current_node = solution_node
+
+    while current_node.parent is not None:
+        actions.insert(0, current_node.action)
+        current_node = current_node.parent
+
+    print("Solution:")
+    for action in actions:
+        print(action)
+    print("Goal reached in", len(actions), "steps.")
+
+def solve_8_puzzle(initial_state, goal_state):
+    initial_node = PuzzleNode(initial_state, None, None, 0, manhattan_distance(initial_state, goal_state))
+    goal_node = PuzzleNode(goal_state)
+
+    open_set = [initial_node]
+    closed_set = set()
+
+    while open_set:
+        current_node = heapq.heappop(open_set)
+
+        if current_node == goal_node:
+            print_solution(current_node)
+            return
+
+        closed_set.add(current_node)
+
+        for neighbor in get_neighbors(current_node):
+            if neighbor not in closed_set and neighbor not in open_set:
+                heapq.heappush(open_set, neighbor)
+
+    print("No solution found.")
+
+# Example usage:
+initial_state = [[1, 2, 3], [0, 4, 6], [7, 5, 8]]
+goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+
+solve_8_puzzle(initial_state, goal_state)
+
+----------------------Slip 25 ------------------------
