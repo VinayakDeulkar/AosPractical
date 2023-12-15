@@ -1,0 +1,184 @@
+
+Neo4j Practical Assignment1
+	•	Library Database :
+
+i.List all people, who have issued a book “……” 
+ii.Count the number of people who have read “ ….”
+iii.Add a property “Number of books issued “ for Mr. Joshi and set its value as thecount
+iv.List the names of publishers from pune city.
+
+
+// Create nodes
+CREATE (:Person {name: 'Alice'})
+CREATE (:Person {name: 'Bob'})
+CREATE (:Person {name: 'Mr. Joshi'})
+CREATE (:Book {title: 'The Great Gatsby'})
+CREATE (:Book {title: 'To Kill a Mockingbird'})
+CREATE (:Book {title: '1984'})
+CREATE (:Publisher {name: 'Penguin', city: 'Pune'})
+CREATE (:Publisher {name: 'HarperCollins', city: 'Mumbai'})
+
+// Create relationships
+CREATE (:Person {name: 'Alice'})-[:BORROWED_BY]->(:Book {title: 'The Great Gatsby'})
+CREATE (:Person {name: 'Bob'})-[:BORROWED_BY]->(:Book {title: 'To Kill a Mockingbird'})
+CREATE (:Person {name: 'Mr. Joshi'})-[:BORROWED_BY]->(:Book {title: '1984'})
+CREATE (:Book {title: 'The Great Gatsby'})-[:PUBLISHED_BY]->(:Publisher {name: 'Penguin'})
+CREATE (:Book {title: 'To Kill a Mockingbird'})-[:PUBLISHED_BY]->(:Publisher {name: 'HarperCollins'})
+
+// Query 1: List all people who have issued a specific book
+MATCH (:Book {title: 'The Great Gatsby'})<-[:BORROWED_BY]-(person:Person)
+RETURN person.name;
+
+// Query 2: Count the number of people who have read a specific book
+MATCH (:Book {title: 'To Kill a Mockingbird'})<-[:BORROWED_BY]-(person:Person)
+RETURN count(DISTINCT person) AS numberOfReaders;
+
+// Query 3: Add a property "Number of books issued" for Mr. Joshi and set its value as the count
+MATCH (person:Person {name: 'Mr. Joshi'})
+SET person.numberOfBooksIssued = SIZE((person)-[:BORROWED_BY]->(:Book))
+RETURN person;
+
+// Query 4: List the names of publishers from Pune city
+MATCH (publisher:Publisher {city: 'Pune'})
+RETURN publisher.name;
+
+1.List all people who have issued a book "..."
+Solution:
+MATCH (p:Person)-[:ISSUED]->(b:Book {title: "Your Book Title"})
+RETURN p.name
+Replace "Your Book Title" with the actual title of the book you're looking for.
+Count the number of people who have read "..."
+MATCH (p:Person)-[:READ]->(b:Book {title: "Your Book Title"})
+RETURN COUNT(p) as numberOfReaders
+
+Add a property "Number of books issued" for Mr. Joshi and set its value as the count
+MATCH (p:Person {name: "Mr. Joshi"})-[:ISSUED]->(b:Book)
+WITH p, COUNT(b) as numberOfBooksIssued
+SET p.numberOfBooksIssued = numberOfBooksIssued
+
+4 List the names of publishers from Pune city
+MATCH (p:Publisher {city: "Pune"})
+RETURN p.name
+
+2 Song Database:
+i.List the names of songs written by “:…..”
+ii.List the names of record companies who have financed for the song “….”
+iii.List the names of artist performing the song “…..”
+iv.Name the songs recorded by the studio “ …….”
+// Create nodes for songs, artists, record companies, and studios
+CREATE (:Song {title: 'Song1'})
+CREATE (:Song {title: 'Song2'})
+CREATE (:Song {title: 'Song3'})
+
+CREATE (:Artist {name: 'Artist1'})
+CREATE (:Artist {name: 'Artist2'})
+CREATE (:Artist {name: 'Artist3'})
+
+CREATE (:RecordCompany {name: 'RecordCompany1'})
+CREATE (:RecordCompany {name: 'RecordCompany2'})
+
+CREATE (:Studio {name: 'Studio1'})
+CREATE (:Studio {name: 'Studio2'})
+
+// Create relationships
+MATCH (song:Song {title: 'Song1'})
+CREATE (song)-[:WRITTEN_BY]->(:Artist {name: 'Artist1'}),
+       (song)-[:FINANCED_BY]->(:RecordCompany {name: 'RecordCompany1'}),
+       (song)-[:PERFORMED_BY]->(:Artist {name: 'Artist2'}),
+       (song)-[:RECORDED_AT]->(:Studio {name: 'Studio1'})
+
+MATCH (song:Song {title: 'Song2'})
+CREATE (song)-[:WRITTEN_BY]->(:Artist {name: 'Artist2'}),
+       (song)-[:FINANCED_BY]->(:RecordCompany {name: 'RecordCompany2'}),
+       (song)-[:PERFORMED_BY]->(:Artist {name: 'Artist3'}),
+       (song)-[:RECORDED_AT]->(:Studio {name: 'Studio2'})
+
+MATCH (song:Song {title: 'Song3'})
+CREATE (song)-[:WRITTEN_BY]->(:Artist {name: 'Artist3'}),
+       (song)-[:FINANCED_BY]->(:RecordCompany {name: 'RecordCompany1'}),
+       (song)-[:PERFORMED_BY]->(:Artist {name: 'Artist1'}),
+       (song)-[:RECORDED_AT]->(:Studio {name: 'Studio2'})
+// Query 1: List the names of songs written by an artist
+MATCH (:Artist {name: 'Artist1'})<-[:WRITTEN_BY]-(song:Song)
+RETURN song.title;
+
+// Query 2: List the names of record companies who have financed a song
+MATCH (:Song {title: 'Song1'})-[:FINANCED_BY]->(recordCompany:RecordCompany)
+RETURN recordCompany.name;
+
+// Query 3: List the names of artists performing a song
+MATCH (:Song {title: 'Song2'})-[:PERFORMED_BY]->(artist:Artist)
+RETURN artist.name;
+
+// Query 4: Name the songs recorded by a studio
+MATCH (:Studio {name: 'Studio2'})<-[:RECORDED_AT]-(song:Song)
+RETURN song.title;
+1) MATCH (s:Song)-[:WRITTEN_BY]->(a:Artist {name: "Your Artist Name"})
+RETURN s.name
+2) MATCH (r:RecordCompany)-[:FINANCED]->(s:Song {name: "Your Song Name"})
+RETURN r.name
+3) MATCH (a:Artist)-[:PERFORMS]->(s:Song {name: "Your Song Name"})
+RETURN a.name
+4) MATCH (s:Studio {name: "Your Studio Name"})-[:RECORDED]->(song:Song)
+RETURN song.name
+
+Library database
+a) List all readers who have recommended either book “…” or “……..” or “”
+b) List the readers who haven‟t recommended any book
+c) List the authors who have written a book that has been read / issuedby maximum numberof readers.
+d) List the names of books recommended by “...................... ” And read by atleast one reader
+e) List the names of books recommended by “...................... ” and read bymaximum number of readers.
+f) List the names of publishers who haven‟t published any books written byauthorsfromPune and Mumbai.g) List the names of voracious readers in our library ............
+
+    # Create nodes
+    "CREATE (:Book {title: 'Book1'})-[:WRITTEN_BY]->(:Author {name: 'Author1'})
+    "CREATE (:Book {title: 'Book2'})-[:WRITTEN_BY]->(:Author {name: 'Author2'})"
+    "CREATE (:Reader {name: 'Reader1'})
+    "CREATE (:Reader {name: 'Reader2'})
+    CREATE (:Publisher {name: 'Publisher1'})
+
+    # Create relationships
+    "MATCH (book:Book {title: 'Book1'})-[:WRITTEN_BY]->(author:Author {name: 'Author1'})
+    "MATCH (book:Book {title: 'Book2'})-[:WRITTEN_BY]->(author:Author {name: 'Author2'})
+    "MATCH (reader:Reader {name: 'Reader1'})-[:RECOMMENDED]->(book:Book {title: 'Book1'})
+    MATCH (reader:Reader {name: 'Reader2'})-[:BORROWED_BY]->(book:Book {title: 'Book1'})
+    MATCH (book:Book {title: 'Book1'})-[:PUBLISHED_BY]->(publisher:Publisher {name: 'Publisher1'})
+
+	•	List all readers who have recommended either book "..." or "......" or ""
+MATCH (r:Reader)-[:RECOMMENDED]->(b:Book)
+WHERE b.title IN ["Your Book Title 1", "Your Book Title 2", ""]
+RETURN r.name
+	•	List the readers who haven't recommended any book
+MATCH (r:Reader)
+WHERE NOT (r)-[:RECOMMENDED]->(:Book)
+RETURN r.name
+	•	List the authors who have written a book that has been read/issued by the maximum number of readers
+MATCH (a:Author)-[:WROTE]->(b:Book)<-[:READ|ISSUED]-(r:Reader)
+WITH a, b, COUNT(DISTINCT r) AS readerCount
+ORDER BY readerCount DESC
+LIMIT 1
+RETURN a.name
+	•	List the names of books recommended by "..." and read by at least one reader
+
+MATCH (r:Reader {name: "Your Reader Name"})-[:RECOMMENDED]->(b:Book)<-[:READ]-(r2:Reader)
+RETURN DISTINCT b.title
+	•	List the names of books recommended by "..." and read by the maximum number of readers
+
+MATCH (r:Reader {name: "Your Reader Name"})-[:RECOMMENDED]->(b:Book)<-[:READ]-(r2:Reader)
+WITH b, COUNT(DISTINCT r2) AS readerCount
+ORDER BY readerCount DESC
+LIMIT 1
+RETURN b.title
+	•	List the names of publishers who haven't published any books written by authors from Pune and Mumbai
+MATCH (p:Publisher)
+WHERE NOT (p)-[:PUBLISHED]->(:Book)-[:WRITTEN_BY]->(a:Author)-[:FROM]->(:Location {city: "Pune"})
+  AND NOT (p)-[:PUBLISHED]->(:Book)-[:WRITTEN_BY]->(a:Author)-[:FROM]->(:Location {city: "Mumbai"})
+RETURN p.name
+
+	•	List the names of voracious readers in our library
+
+MATCH (r:Reader)-[r1:READ|RECOMMENDED]->(:Book)
+WITH r, COUNT(r1) AS totalActions
+ORDER BY totalActions DESC
+LIMIT 1
+RETURN r.name
